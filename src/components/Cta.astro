@@ -1,0 +1,12 @@
+---
+interface Props { href?: string; label?: string; variant?: "primary" | "ghost"; }
+const { href = "/kontakt/", label = "Umów spotkanie", variant = "primary" } = Astro.props;
+---
+<a class:list={["cta", `cta--${variant}`]} href={href}>{label}</a>
+<style>
+  .cta { display: inline-block; padding: 14px 24px; font-weight: 700; font-size: 16px; line-height: 1.2; text-decoration: none; transition: background 0.15s, color 0.15s; }
+  .cta--primary { background: var(--red); color: var(--white); }
+  .cta--primary:hover { background: var(--white); color: var(--black); }
+  .cta--ghost { box-shadow: inset 0 0 0 2px var(--white); color: var(--white); }
+  .cta--ghost:hover { background: var(--white); color: var(--black); }
+</style>

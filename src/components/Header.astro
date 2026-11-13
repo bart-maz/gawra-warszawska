@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import sygnet from "../assets/brand/sygnet-white.png";
+import Cta from "./Cta.astro";
+const links = [
+  { href: "/realizacje/", label: "Realizacje" },
+  { href: "/co-robimy/", label: "Co robimy" },
+  { href: "/o-nas/", label: "O nas" },
+  { href: "/kontakt/", label: "Kontakt" },
+];
+const path = Astro.url.pathname;
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="logo" href="/" aria-label="Gawra Warszawska, strona główna">
+      <Image src={sygnet} alt="" width={36} height={38} loading="eager" />
+      <span>Gawra<br />Warszawska</span>
+    </a>
+    <nav aria-label="Główna">
+      <details class="menu">
+        <summary>Menu</summary>
+        <ul>
+          {links.map((l) => (
+            <li><a class="navlink" href={l.href} aria-current={path.startsWith(l.href) ? "page" : undefined}>{l.label}</a></li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+    <Cta />
+  </div>
+</header>
+<script>
+  // On wide screens the menu is always open; on phones it starts closed.
+  const menu = document.querySelector<HTMLDetailsElement>("details.menu");
+  const wide = window.matchMedia("(min-width: 761px)");
+  const sync = () => { if (menu) menu.open = wide.matches; };
+  sync();
+  wide.addEventListener("change", sync);
+</script>
+<style>
+  .site-header { position: relative; z-index: 5; }
+  .bar { display: flex; align-items: center; gap: 24px; padding-block: 18px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1; }
+  nav { margin-left: auto; }
+  summary { display: none; }
+  .menu ul { display: flex; gap: 28px; }
+  .navlink { text-decoration: none; font-weight: 500; font-size: 16px; padding-block: 6px; border-bottom: 2px solid transparent; }
+  .navlink:hover, .navlink[aria-current="page"] { border-bottom-color: var(--red); }
+  @media (max-width: 760px) {
+    .bar { flex-wrap: wrap; gap: 12px; }
+    nav { order: 3; width: 100%; margin: 0; }
+    .bar :global(.cta) { margin-left: auto; padding: 10px 16px; font-size: 15px; }
+    summary { display: inline-block; cursor: pointer; font-weight: 700; padding: 8px 0; list-style: none; text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: " +"; color: var(--red); }
+    details[open] summary::after { content: " −"; }
+    .menu ul { flex-direction: column; gap: 4px; padding-bottom: 8px; }
+    .navlink { display: block; font-size: 20px; padding-block: 8px; }
+  }
+</style>
+<noscript><style>details.menu > ul { display: flex !important; } </style></noscript>

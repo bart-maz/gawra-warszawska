@@ -1,0 +1,40 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap cols">
+    <div>
+      <p class="name">Gawra Warszawska</p>
+      <p class="muted">Agencja eventowa. Zespół charakternych, kreatywnych i doświadczonych profesjonalistów.</p>
+    </div>
+    <div>
+      <p class="label">Biuro</p>
+      <p>Duchnicka 3 bud. Defabryka<br />01-796 Warszawa</p>
+    </div>
+    <div>
+      <p class="label">Kontakt</p>
+      <p><a href="mailto:biuro@gawra-warszawska.pl">biuro@gawra-warszawska.pl</a><br /><a href="tel:+48604774276">604 774 276</a></p>
+    </div>
+    <div>
+      <p class="label">Obserwuj nas</p>
+      <p>
+        <a href="https://pl.linkedin.com/company/gawra-warszawska" rel="noopener">LinkedIn</a><br />
+        <a href="https://www.instagram.com/gawra_warszawska/" rel="noopener">Instagram</a><br />
+        <a href="https://www.facebook.com/gawrawarszawska/" rel="noopener">Facebook</a>
+      </p>
+    </div>
+  </div>
+  <div class="wrap legal"><p>© {year} Gawra Warszawska</p></div>
+</footer>
+<style>
+  .site-footer { border-top: 1px solid var(--line); padding-block: 48px 28px; font-size: 15px; }
+  .cols { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; }
+  .name { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 28px; line-height: 1; margin-bottom: 10px; }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-bottom: 8px; }
+  .muted, .legal { color: var(--grey); }
+  .muted { max-width: 34ch; }
+  .legal { margin-top: 40px; font-size: 13px; }
+  a { text-decoration: none; border-bottom: 1px solid var(--line); }
+  a:hover { border-bottom-color: var(--red); }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr 1fr; } .cols > :first-child { grid-column: 1 / -1; } }
+</style>

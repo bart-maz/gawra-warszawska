@@ -1,0 +1,15 @@
+:root {
+  color-scheme: dark;
+  --black: #0b0b0c;
+  --ink: #141416;
+  --line: #2a2a2e;
+  --white: #ffffff;
+  --soft: #cfccc7;
+  --grey: #8d8a86;
+  --red: #e0092f;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(20px, 4vw, 48px);
+  --maxw: 1280px;
+  --section: clamp(56px, 8vw, 112px);
+}

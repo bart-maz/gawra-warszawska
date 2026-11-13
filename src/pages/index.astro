@@ -1,6 +1,6 @@
 ---
-import { getCollection } from "astro:content";
-const all = await getCollection("realizacje");
+import Base from "../layouts/Base.astro";
 ---
-<html lang="pl"><head><meta charset="utf-8" /><title>Gawra Warszawska</title></head>
-<body><p>{all.length}</p></body></html>
+<Base title="Gawra Warszawska" description="Agencja eventowa z Warszawy. Konferencje, strefy festiwalowe i wydarzenia marek.">
+  <div class="wrap section"><h1>Kreujemy niebanalne wrażenia</h1></div>
+</Base>

@@ -1,0 +1,51 @@
+---
+import "@fontsource/big-shoulders-display/latin-ext-700";
+import "@fontsource/big-shoulders-display/latin-700";
+import "@fontsource/big-shoulders-display/latin-ext-900";
+import "@fontsource/big-shoulders-display/latin-900";
+import "@fontsource/manrope/latin-ext-400";
+import "@fontsource/manrope/latin-400";
+import "@fontsource/manrope/latin-ext-500";
+import "@fontsource/manrope/latin-500";
+import "@fontsource/manrope/latin-ext-700";
+import "@fontsource/manrope/latin-700";
+import "../styles/tokens.css";
+import "../styles/base.css";
+import { getImage } from "astro:assets";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import defaultImage from "../assets/realizacje/strefa-galaxy-fun-na-festiwalach/01.jpg";
+
+interface Props { title: string; description: string; image?: ImageMetadata; }
+const { title, description, image = defaultImage } = Astro.props;
+const fullTitle = title === "Gawra Warszawska" ? title : `${title} | Gawra Warszawska`;
+const og = await getImage({ src: image, width: 1200, height: 630, format: "jpg", fit: "cover" });
+const ogUrl = new URL(og.src, Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content="Gawra Warszawska" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#0b0b0c" />
+  </head>
+  <body>
+    <a class="skip" href="#tresc">Przejdź do treści</a>
+    <Header />
+    <main id="tresc"><slot /></main>
+    <Footer />
+  </body>
+</html>
