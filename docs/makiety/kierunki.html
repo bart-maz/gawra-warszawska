@@ -1,0 +1,313 @@
+<title>Gawra Warszawska: kierunki wyglądu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Unbounded:wght@500;800&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Layout: one shared page skeleton (nav, hero, portfolio with filters, case study) shown in three skins, switched from a sticky bar. */
+:root{
+  color-scheme: dark;
+  --red:#e0092f; --red-deep:#b00622; --black:#0b0b0c; --ink:#141416; --white:#ffffff; --paper:#f5f3ef;
+  --grey:#8d8a86; --line:#2a2a2e;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-scena:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-afisz:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-czerwien:"Unbounded","Arial Black",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--black);color:var(--white);font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+img{display:block;width:100%;height:100%;object-fit:cover}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+
+/* ---------- switcher (mockup chrome, not part of the design) ---------- */
+.switch{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--ink);border-bottom:1px solid var(--line)}
+.switch .wrap{display:flex;gap:12px 20px;align-items:center;flex-wrap:wrap;padding-block:10px}
+.switch p{margin:0;font-size:13px;color:var(--grey)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{background:transparent;border:1px solid var(--line);color:var(--white);padding:7px 14px;border-radius:6px;font-size:14px;font-weight:700}
+.tabs button[aria-pressed="true"]{background:var(--white);color:var(--black);border-color:var(--white)}
+.note{background:var(--ink);color:var(--grey);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.note .wrap{padding-block:8px}
+.about{background:var(--ink);color:#c9c6c1;font-size:15px}
+.about .wrap{padding-block:14px}
+.about strong{color:var(--white)}
+
+/* ---------- shared skeleton ---------- */
+.nav .wrap{display:flex;align-items:center;gap:24px;padding-block:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;line-height:1.1}
+.logo img{width:34px;height:36px;object-fit:contain}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0;font-size:15px;font-weight:500}
+.cta{display:inline-block;padding:13px 22px;font-weight:700;font-size:15px;border:0;text-decoration:none}
+.hero h1{margin:0;text-wrap:balance}
+.hero .lead{max-width:46ch;margin:0}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+.work h2,.case h2{margin:0;text-wrap:balance}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:0;background:none;padding:9px 16px;font-size:14px;font-weight:700}
+.count{font-size:14px;margin:0}
+.grid{list-style:none;margin:0;padding:0;display:grid}
+.card .client{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.card h3{margin:0}
+.card .meta{font-size:14px}
+.case dl{margin:0;display:grid;gap:14px 28px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.case dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.case dd{margin:2px 0 0}
+.stats{display:flex;gap:20px 44px;flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.stats b{display:block;font-variant-numeric:tabular-nums}
+.stats span{font-size:14px}
+@media (max-width:760px){.nav ul{display:none}.nav .cta{margin-left:auto}}
+
+/* =====================================================================
+   A. SCENA: dark ground, photos carry the page, red only as signal
+   ===================================================================== */
+.d-scena{background:var(--black);color:var(--white)}
+.d-scena .logo .lb{display:none}
+.d-scena .cta{background:var(--red);color:var(--white)}
+.d-scena .cta.ghost{background:transparent;box-shadow:inset 0 0 0 2px var(--white)}
+.d-scena .hero{position:relative;isolation:isolate}
+.d-scena .hero .bg{position:absolute;inset:0;z-index:-1}
+.d-scena .hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.55),rgba(11,11,12,.2) 40%,rgba(11,11,12,.96))}
+.d-scena .hero .shot,.d-scena .hero .shot2{display:none}
+.d-afisz .hero .bg,.d-pastylka .hero .bg{display:none}
+.d-scena .hero .wrap{display:grid;gap:24px;padding-block:clamp(70px,13vw,190px) clamp(36px,5vw,64px)}
+.d-scena .hero h1{font-family:var(--f-scena);font-weight:900;text-transform:uppercase;font-size:clamp(58px,12vw,176px);line-height:.84;letter-spacing:-.01em}
+.d-scena .hero h1 em{font-style:normal;color:var(--red)}
+.d-scena .hero .lead{font-size:18px;color:#e6e3de}
+.d-scena .work .wrap{display:grid;gap:26px;padding-block:clamp(48px,7vw,96px)}
+.d-scena .work h2,.d-scena .case h2{font-family:var(--f-scena);font-weight:900;text-transform:uppercase;font-size:clamp(40px,6vw,84px);line-height:.9}
+.d-scena .filters button{box-shadow:inset 0 0 0 1px #44444a;color:#d8d5d0}
+.d-scena .filters button[aria-pressed="true"]{background:var(--red);box-shadow:none;color:var(--white)}
+.d-scena .count{color:var(--grey)}
+.d-scena .grid{grid-template-columns:repeat(12,1fr);gap:14px}
+.d-scena .card{grid-column:span 5;position:relative;height:clamp(250px,30vw,420px);overflow:hidden;background:var(--ink)}
+.d-scena .card:nth-child(4n+1),.d-scena .card:nth-child(4n){grid-column:span 7}
+.d-scena .card .pic{position:absolute;inset:0}
+.d-scena .card .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(11,11,12,.92))}
+.d-scena .card .txt{position:absolute;inset:auto 0 0 0;padding:20px;display:grid;gap:4px}
+.d-scena .card .client{color:var(--red)}
+.d-scena .card h3{font-family:var(--f-scena);font-weight:700;text-transform:uppercase;font-size:clamp(26px,2.8vw,40px);line-height:.95}
+.d-scena .card .meta{color:#cfccc7}
+.d-scena .card .fact{position:absolute;top:14px;left:14px;background:var(--white);color:var(--black);font-weight:700;font-size:13px;padding:5px 10px}
+.d-scena .case{background:var(--ink)}
+.d-scena .case .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(24px,4vw,56px);padding-block:clamp(48px,7vw,96px);align-items:start}
+.d-scena .case .body{display:grid;gap:26px;min-width:0}
+.d-scena .case dt{color:var(--red)}
+.d-scena .stats b{font-family:var(--f-scena);font-weight:900;font-size:clamp(52px,6vw,88px);line-height:.9}
+.d-scena .stats span{color:#cfccc7}
+.d-scena .case .pics{display:grid;gap:14px}
+.d-scena .case .pics div{aspect-ratio:3/2;overflow:hidden}
+@media (max-width:760px){
+  .d-scena .card,.d-scena .card:nth-child(n){grid-column:span 12}
+  .d-scena .case .wrap{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   B. AFISZ: white poster, huge black type, portfolio as an index list
+   ===================================================================== */
+.d-afisz{background:var(--white);color:var(--black)}
+.d-afisz .logo .lw{display:none}
+.d-afisz .nav{border-bottom:3px solid var(--black)}
+.d-afisz .cta{background:var(--black);color:var(--white)}
+.d-afisz .cta.ghost{background:transparent;color:var(--black);box-shadow:inset 0 0 0 3px var(--black)}
+.d-afisz .hero .wrap{display:grid;grid-template-columns:repeat(12,1fr);gap:28px 20px;padding-block:clamp(36px,6vw,84px)}
+.d-afisz .hero h1{grid-column:1/-1;font-family:var(--f-afisz);font-weight:800;font-size:clamp(52px,11.5vw,170px);line-height:.88;letter-spacing:-.045em}
+.d-afisz .hero h1 em{font-style:normal;color:var(--red)}
+.d-afisz .hero .lead{grid-column:1/6;font-size:19px;font-weight:500;align-self:end}
+.d-afisz .hero .actions{grid-column:1/6;align-self:start}
+.d-afisz .hero .shot{grid-column:6/-1;grid-row:2/4;aspect-ratio:16/9;box-shadow:16px 16px 0 var(--red)}
+.d-afisz .hero .shot2{display:none}
+.d-afisz .work .wrap{display:grid;gap:22px;padding-block:clamp(40px,6vw,84px)}
+.d-afisz .work h2,.d-afisz .case h2{font-family:var(--f-afisz);font-weight:800;font-size:clamp(40px,6.5vw,92px);line-height:.92;letter-spacing:-.04em}
+.d-afisz .filters button{box-shadow:inset 0 0 0 2px var(--black)}
+.d-afisz .filters button[aria-pressed="true"]{background:var(--red);color:var(--white);box-shadow:none}
+.d-afisz .count{color:#5a5754}
+.d-afisz .grid{grid-template-columns:1fr;border-bottom:3px solid var(--black)}
+.d-afisz .card{display:grid;grid-template-columns:150px minmax(0,1.7fr) minmax(0,1fr) auto;gap:8px 24px;align-items:center;border-top:3px solid var(--black);padding:14px 0;transition:background .15s,color .15s,padding .15s}
+.d-afisz .card:hover{background:var(--red);color:var(--white);padding-inline:14px}
+.d-afisz .card .pic{aspect-ratio:3/2;overflow:hidden}
+.d-afisz .card .txt{display:contents}
+.d-afisz .card .client{grid-column:2;grid-row:1;align-self:end}
+.d-afisz .card h3{grid-column:2;grid-row:2;align-self:start;font-family:var(--f-afisz);font-weight:800;font-size:clamp(22px,2.6vw,36px);line-height:1;letter-spacing:-.02em}
+.d-afisz .card .pic{grid-row:1/3}
+.d-afisz .card .meta{grid-column:3;grid-row:1/3;font-weight:500}
+.d-afisz .card .fact{grid-column:4;grid-row:1/3;font-family:var(--f-afisz);font-weight:800;font-size:18px;text-align:right;max-width:14ch}
+.d-afisz .case{background:var(--paper)}
+.d-afisz .case .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);padding-block:clamp(40px,6vw,84px);align-items:start}
+.d-afisz .case .body{display:grid;gap:26px;min-width:0}
+.d-afisz .case dl{border-top:3px solid var(--black);padding-top:16px}
+.d-afisz .stats b{font-family:var(--f-afisz);font-weight:800;font-size:clamp(52px,6.5vw,96px);line-height:.9;letter-spacing:-.04em;color:var(--red)}
+.d-afisz .case .pics{display:grid;gap:16px}
+.d-afisz .case .pics div{aspect-ratio:3/2;overflow:hidden}
+@media (max-width:760px){
+  .d-afisz .hero .lead,.d-afisz .hero .actions,.d-afisz .hero .shot{grid-column:1/-1;grid-row:auto}
+  .d-afisz .hero .shot{box-shadow:8px 8px 0 var(--red);margin-right:8px}
+  .d-afisz .card{grid-template-columns:96px minmax(0,1fr)}
+  .d-afisz .card .meta,.d-afisz .card .fact{grid-column:1/-1;grid-row:auto;text-align:left;max-width:none}
+  .d-afisz .card .fact{font-size:16px}
+  .d-afisz .case .wrap{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   C. PASTYLKA: red-led, the pill shapes from your PDF portfolio in red/white/black
+   ===================================================================== */
+.d-pastylka{background:var(--white);color:var(--black)}
+.d-pastylka .logo .lb{display:none}
+.d-pastylka .nav{background:var(--red);color:var(--white)}
+.d-pastylka .cta{background:var(--black);color:var(--white);border-radius:999px}
+.d-pastylka .cta.ghost{background:var(--white);color:var(--black)}
+.d-pastylka .hero{background:var(--red);color:var(--white)}
+.d-pastylka .hero .wrap{display:grid;grid-template-columns:repeat(12,1fr);gap:26px 20px;padding-block:clamp(28px,5vw,64px) clamp(44px,6vw,84px)}
+.d-pastylka .hero h1{grid-column:1/-1;font-family:var(--f-czerwien);font-weight:800;font-size:clamp(38px,8vw,116px);line-height:.98;letter-spacing:-.03em}
+.d-pastylka .hero h1 em{font-style:normal;background:var(--white);color:var(--red);border-radius:999px;padding:0 .22em;display:inline-block}
+.d-pastylka .hero .shot{grid-column:1/8;aspect-ratio:2/1;border-radius:999px;overflow:hidden}
+.d-pastylka .hero .shot2{grid-column:8/-1;aspect-ratio:1/1;border-radius:999px 999px 0 0;overflow:hidden}
+.d-pastylka .hero .lead{grid-column:1/7;font-size:18px;font-weight:500}
+.d-pastylka .hero .actions{grid-column:7/-1;justify-content:flex-end;align-self:center}
+.d-pastylka .work .wrap{display:grid;gap:24px;padding-block:clamp(40px,6vw,84px)}
+.d-pastylka .work h2,.d-pastylka .case h2{font-family:var(--f-czerwien);font-weight:800;font-size:clamp(30px,4.6vw,62px);line-height:1;letter-spacing:-.03em}
+.d-pastylka .filters button{border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--black)}
+.d-pastylka .filters button[aria-pressed="true"]{background:var(--black);color:var(--white)}
+.d-pastylka .count{color:#5a5754}
+.d-pastylka .grid{grid-template-columns:repeat(3,1fr);gap:36px 22px}
+.d-pastylka .card{display:grid;gap:12px;align-content:start;position:relative}
+.d-pastylka .card .pic{aspect-ratio:16/10;border-radius:999px;overflow:hidden}
+.d-pastylka .card:nth-child(3n+2) .pic{border-radius:36px}
+.d-pastylka .card .txt{display:grid;gap:4px;padding-inline:8px}
+.d-pastylka .card .client{color:var(--red)}
+.d-pastylka .card h3{font-family:var(--f-czerwien);font-weight:500;font-size:19px;line-height:1.2;letter-spacing:-.01em}
+.d-pastylka .card .meta{color:#5a5754}
+.d-pastylka .card .fact{position:absolute;top:12px;right:12px;background:var(--black);color:var(--white);border-radius:999px;font-size:12px;font-weight:700;padding:6px 12px}
+.d-pastylka .case{background:var(--black);color:var(--white)}
+.d-pastylka .case .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);padding-block:clamp(40px,6vw,84px);align-items:start}
+.d-pastylka .case .body{display:grid;gap:26px;min-width:0}
+.d-pastylka .case dl{gap:18px 16px}
+.d-pastylka .case dt{display:inline-block;background:var(--white);color:var(--black);border-radius:999px;padding:4px 12px}
+.d-pastylka .case dd{margin-top:8px;padding-left:12px}
+.d-pastylka .stats b{font-family:var(--f-czerwien);font-weight:800;font-size:clamp(40px,5vw,72px);line-height:1;color:var(--red)}
+.d-pastylka .case .pics{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.d-pastylka .case .pics div{overflow:hidden;aspect-ratio:3/4;border-radius:999px 999px 0 0}
+.d-pastylka .case .pics div:first-child{grid-column:1/-1;aspect-ratio:2/1;border-radius:999px}
+@media (max-width:900px){.d-pastylka .grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:760px){
+  .d-pastylka .hero .shot,.d-pastylka .hero .lead,.d-pastylka .hero .actions{grid-column:1/-1}
+  .d-pastylka .hero .shot2{display:none}
+  .d-pastylka .hero .actions{justify-content:flex-start}
+  .d-pastylka .grid{grid-template-columns:1fr}
+  .d-pastylka .case .wrap{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="switch">
+  <div class="wrap">
+    <p>Kierunek wyglądu:</p>
+    <div class="tabs" id="tabs">
+      <button type="button" data-d="scena" id="tab-scena">A. Scena</button>
+      <button type="button" data-d="afisz" id="tab-afisz">B. Afisz</button>
+      <button type="button" data-d="pastylka" id="tab-pastylka">C. Pastylka</button>
+    </div>
+  </div>
+</div>
+<div class="about"><div class="wrap" id="about"></div></div>
+
+<div id="site" class="d-scena">
+  <div class="note"><div class="wrap">Strona główna</div></div>
+  <header class="nav">
+    <div class="wrap">
+      <div class="logo"><img class="lw" src="img/sygnet-white.png" alt=""><img class="lb" src="img/sygnet-black.png" alt=""><span>Gawra<br>Warszawska</span></div>
+      <ul><li>Realizacje</li><li>Co robimy</li><li>O nas</li><li>Kontakt</li></ul>
+      <span class="cta">Umów spotkanie</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="bg"><img src="img/p6.jpg" alt="Scena Galaxy Campus w światłach reflektorów"></div>
+    <div class="wrap">
+      <h1>Kreujemy <em>niebanalne</em> wrażenia</h1>
+      <div class="shot"><img src="img/p11.jpg" alt="Strefa Galaxy na festiwalu o zmierzchu"></div>
+      <div class="shot2"><img src="img/p10.jpg" alt="Wnętrze strefy Samsung Galaxy"></div>
+      <p class="lead">Agencja eventowa z Warszawy. Konferencje, strefy festiwalowe i wydarzenia marek, od idei po ostatni kabel.</p>
+      <div class="actions"><span class="cta">Umów spotkanie</span><span class="cta ghost">Zobacz realizacje</span></div>
+    </div>
+  </section>
+
+  <div class="note"><div class="wrap">Portfolio z filtrami (filtry działają, kliknij)</div></div>
+  <section class="work">
+    <div class="wrap">
+      <h2>Realizacje</h2>
+      <div class="filters" id="filters"></div>
+      <p class="count" id="count"></p>
+      <ul class="grid" id="grid"></ul>
+    </div>
+  </section>
+
+  <div class="note"><div class="wrap">Podstrona realizacji (górna część)</div></div>
+  <section class="case">
+    <div class="wrap">
+      <div class="body">
+        <h2>Strefa Galaxy Fun na festiwalach</h2>
+        <ul class="stats">
+          <li><b>30 tys.+</b><span>odwiedzających strefę</span></li>
+          <li><b>3</b><span>Open'er, Clout, Juwenalia</span></li>
+        </ul>
+        <dl>
+          <div><dt>Klient</dt><dd>Samsung</dd></div>
+          <div><dt>Typ projektu</dt><dd>Strefa festiwalowa</dd></div>
+          <div><dt>Data</dt><dd>Lato 2023</dd></div>
+          <div><dt>Zakres</dt><dd>Koncepcja, scenografia, realizacja, obsługa</dd></div>
+        </dl>
+        <p style="margin:0;max-width:60ch">Jak przyciągnąć uwagę młodych na festiwalach, gdzie co rusz czekają na nich atrakcje? Zaprojektowaliśmy surrealistyczny, przenośny kubik, który kształtami nawiązywał do produktów Galaxy. W środku: strefa foto, chillout room i life-size jednorożec, który stał się gwiazdą Instagrama.</p>
+        <div><span class="cta">Umów spotkanie w sprawie podobnego projektu</span></div>
+      </div>
+      <div class="pics">
+        <div><img src="img/p11.jpg" alt="Strefa Galaxy na festiwalu"></div>
+        <div><img src="img/p10.jpg" alt="Wnętrze strefy z hostami w różowych strojach"></div>
+        <div><img src="img/p2.jpg" alt="Jednorożec w strefie Samsung"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const PROJECTS = [
+  {t:"Strefa Galaxy Fun na festiwalach", c:"Samsung", k:"festiwale", m:"Strefa festiwalowa · 2023", f:"30 tys.+ odwiedzających", i:"p11"},
+  {t:"Dzień Dobry Tchibo", c:"Tchibo", k:"konferencje", m:"Konferencja roczna · 2023", f:"2 dni, Folwark Łochów", i:"p9"},
+  {t:"Galaxy Campus", c:"Samsung", k:"festiwale", m:"Impreza plenerowa · 2022", f:"10 000 uczestników", i:"p6"},
+  {t:"Betclic x FAME MMA", c:"Betclic", k:"promocja", m:"Strefy promocyjne · 2023–24", f:"6 gal w 6 halach", i:"p0"},
+  {t:"ProviTV", c:"Provident", k:"konferencje", m:"Konferencja roczna · 2023", f:"Konwencja telewizyjna", i:"p7"},
+  {t:"Galaxy Live „Back to School”", c:"Samsung", k:"centra", m:"Event w centrum handlowym · 2023", f:"2,8 mln zasięgu", i:"p2"},
+  {t:"Betclic Studio", c:"Betclic", k:"promocja", m:"Premiera filmów · 2023", f:"Mała Warszawa", i:"p5"},
+  {t:"Bezpieczny lot", c:"Exclusive Networks", k:"konferencje", m:"Konferencja jubileuszowa · 2023", f:"20 lat współpracy", i:"p8"},
+  {t:"Otwarcie hali LPP Logistics", c:"Panattoni", k:"specjalne", m:"Uroczyste otwarcie", f:"Otwarcie inwestycji", i:"p1"},
+  {t:"CNK x wieczory dla dorosłych", c:"Centrum Nauki Kopernik", k:"specjalne", m:"Wydarzenie specjalne", f:"Scenografia", i:"p4"},
+  {t:"30-lecie Uczelni Techniczno-Handlowej", c:"UTH", k:"konferencje", m:"Gala jubileuszowa", f:"30 lat uczelni", i:"p3"}
+];
+const KINDS = [["all","Wszystkie"],["konferencje","Konferencje"],["festiwale","Festiwale i plenery"],["centra","Centra handlowe"],["promocja","Promocja marki"],["specjalne","Wydarzenia specjalne"]];
+const ABOUT = {
+  scena:"<strong>A. Scena.</strong> Czarne tło, zdjęcia z realizacji na całą szerokość, czerwień tylko jako sygnał (przyciski, klient, wyróżnienia). Najbliżej klimatu wydarzenia na żywo.",
+  afisz:"<strong>B. Afisz.</strong> Biała strona, ogromna czarna typografia, czerwień jako blok i akcent. Portfolio jako czytelna lista: klient, projekt, typ, wynik. Najszybsze do przejrzenia.",
+  pastylka:"<strong>C. Pastylka.</strong> Czerwień prowadzi, a zdjęcia siedzą w zaokrąglonych kształtach z Waszego PDF-u. Najbardziej rozpoznawalne i spójne z obecnymi materiałami."
+};
+const $ = id => document.getElementById(id);
+let kind = "all";
+
+function renderFilters(){
+  $("filters").innerHTML = KINDS.map(([k,l]) => `<button type="button" id="f-${k}" data-k="${k}" aria-pressed="${k===kind}">${l}</button>`).join("");
+}
+function renderGrid(){
+  const list = PROJECTS.filter(p => kind==="all" || p.k===kind);
+  $("grid").innerHTML = list.map(p => `<li class="card"><div class="pic"><img src="img/${p.i}.jpg" alt="${p.t}" loading="lazy"></div><div class="txt"><span class="client">${p.c}</span><h3>${p.t}</h3><span class="meta">${p.m}</span></div><span class="fact">${p.f}</span></li>`).join("");
+  $("count").textContent = list.length + " z " + PROJECTS.length + " realizacji";
+}
+function setDirection(d){
+  if(!ABOUT[d]) d = "scena";
+  $("site").className = "d-" + d;
+  $("about").innerHTML = ABOUT[d];
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.d===d));
+}
+$("filters").addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return; kind = b.dataset.k; renderFilters(); renderGrid(); });
+$("tabs").addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return; location.hash = b.dataset.d; setDirection(b.dataset.d); });
+window.addEventListener("hashchange", () => setDirection(location.hash.slice(1)));
+renderFilters(); renderGrid(); setDirection(location.hash.slice(1));
+</script>
