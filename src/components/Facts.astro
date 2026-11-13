@@ -1,0 +1,20 @@
+---
+import type { Project } from "../lib/collection";
+import { SERVICES, TYPES } from "../lib/taxonomy";
+interface Props { project: Project; }
+const d = Astro.props.project.data;
+---
+<dl class="facts">
+  <div><dt>Klient</dt><dd><a href={`/realizacje/?klient=${Astro.props.project.clientSlug}`}>{d.client}</a></dd></div>
+  <div><dt>Typ projektu</dt><dd>{d.types.map((t) => <a href={`/realizacje/?typ=${t}`}>{TYPES[t]}</a>)}</dd></div>
+  {d.dateLabel && <div><dt>Data</dt><dd>{d.dateLabel}</dd></div>}
+  <div><dt>Miejsce</dt><dd>{d.place}</dd></div>
+  <div><dt>Usługi</dt><dd>{d.services.map((s) => <a href={`/realizacje/?usluga=${s}`}>{SERVICES[s]}</a>)}</dd></div>
+</dl>
+<style>
+  .facts { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 20px 32px; border-top: 1px solid var(--line); padding-top: 24px; }
+  dt { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+  dd { margin: 4px 0 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  a { text-decoration: none; border-bottom: 1px solid #55555c; }
+  a:hover { border-bottom-color: var(--red); }
+</style>

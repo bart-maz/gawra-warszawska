@@ -1,0 +1,13 @@
+---
+interface Props { stats: { value: string; label: string }[]; }
+const { stats } = Astro.props;
+---
+<ul class="stats">
+  {stats.map((s) => <li><b>{s.value}</b><span>{s.label}</span></li>)}
+</ul>
+<style>
+  .stats { display: flex; flex-wrap: wrap; gap: 24px 56px; }
+  li { max-width: 24ch; }
+  b { display: block; font-family: var(--f-display); font-weight: 900; font-size: clamp(52px, 7vw, 104px); line-height: 0.9; font-variant-numeric: tabular-nums; }
+  span { display: block; margin-top: 6px; font-size: 15px; color: var(--soft); }
+</style>

@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Cta from "../../components/Cta.astro";
+import Facts from "../../components/Facts.astro";
+import Gallery from "../../components/Gallery.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Stats from "../../components/Stats.astro";
+import { getProjects, type Project } from "../../lib/collection";
+import { related } from "../../lib/projects";
+
+export async function getStaticPaths() {
+  const all = await getProjects();
+  return all.map((project) => ({ params: { slug: project.slug }, props: { project, similar: related(all, project, 3) } }));
+}
+
+interface Props { project: Project; similar: Project[]; }
+const { project, similar } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const description = `${d.title}: realizacja dla marki ${d.client}. ${d.highlight}.`;
+---
+<Base title={`${d.title}, ${d.client}`} description={description} image={d.cover}>
+  <article>
+    <header class="top">
+      <Image class="cover" src={d.cover} alt={d.title} widths={[640, 1200, 1800]} sizes="100vw" quality={72} loading="eager" />
+      <div class="wrap head">
+        <a class="back" href="/realizacje/">← Wszystkie realizacje</a>
+        <p class="eyebrow">{d.client}</p>
+        <h1>{d.title}</h1>
+      </div>
+    </header>
+
+    <div class="wrap body">
+      {d.stats.length > 0 && <Stats stats={d.stats} />}
+      <Facts project={project} />
+      <div class="cols">
+        <div class="prose"><Content /></div>
+        {(d.scope || d.strength) && (
+          <aside class="side">
+            {d.scope && <section><h2>Odpowiedzialność i działania</h2><p>{d.scope}</p></section>}
+            {d.strength && <section><h2>Najmocniejsza strona projektu</h2><p>{d.strength}</p></section>}
+          </aside>
+        )}
+      </div>
+      {d.gallery.length > 0 && <Gallery images={d.gallery} title={d.title} />}
+      {d.video && <p><a class="video" href={d.video} rel="noopener">Zobacz wideo z realizacji →</a></p>}
+    </div>
+
+    <section class="section section--ink">
+      <div class="wrap stack">
+        <h2 class="ask">Planujesz coś podobnego?</h2>
+        <p class="lead">Opowiedz nam o swoim wydarzeniu. Wrócimy z pomysłem, zakresem i terminami.</p>
+        <div><Cta href={`/kontakt/?realizacja=${project.slug}`} label="Umów spotkanie w sprawie podobnego projektu" /></div>
+      </div>
+    </section>
+
+    {similar.length > 0 && (
+      <section class="wrap section stack" id="podobne">
+        <h2 class="ask">Podobne realizacje</h2>
+        <ul class="similar">{similar.map((p) => <ProjectCard project={p} />)}</ul>
+      </section>
+    )}
+  </article>
+</Base>
+<style>
+  .top { position: relative; isolation: isolate; margin-top: -84px; padding-top: 84px; min-height: clamp(420px, 62vw, 760px); display: flex; align-items: flex-end; }
+  .cover { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .top::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11, 11, 12, 0.7), rgba(11, 11, 12, 0.15) 40%, rgba(11, 11, 12, 0.97)); }
+  .head { width: 100%; display: grid; gap: 10px; padding-block: 48px 36px; }
+  .back { justify-self: start; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--soft); margin-bottom: 12px; }
+  .back:hover { color: var(--white); }
+  h1 { font-size: clamp(46px, 8.5vw, 132px); overflow-wrap: anywhere; }
+  .body { display: grid; gap: clamp(36px, 5vw, 64px); padding-block: clamp(32px, 5vw, 64px) var(--section); }
+  .cols { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .prose { font-size: 18px; }
+  .prose :global(ul) { list-style: disc; padding-left: 1.2em; display: grid; gap: 0.5em; }
+  .prose :global(strong) { color: var(--white); }
+  .side { display: grid; gap: 28px; }
+  .side h2 { font-family: var(--f-body); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; line-height: 1.4; color: var(--red); margin-bottom: 8px; }
+  .side p { color: var(--soft); }
+  .video { font-weight: 700; }
+  .ask { font-size: clamp(36px, 5vw, 68px); }
+  .similar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .similar :global(.card) { height: clamp(240px, 24vw, 340px); }
+  @media (max-width: 760px) {
+    .top { margin-top: -130px; padding-top: 130px; }
+    .cols, .similar { grid-template-columns: 1fr; }
+  }
+</style>
