@@ -1,0 +1,63 @@
+# Panel dla zespołu (Pages CMS, https://app.pagescms.org). Pola odpowiadają src/content.config.ts.
+media:
+  input: src/assets/realizacje
+  output: ../../assets/realizacje
+  extensions: [jpg, jpeg, png, webp]
+content:
+  - name: realizacje
+    label: Realizacje
+    type: collection
+    path: src/content/realizacje
+    filename: "{primary}.md"
+    view:
+      fields: [title, client, year]
+      primary: title
+      sort: [year, title]
+    fields:
+      - { name: title, label: Tytuł, type: string, required: true }
+      - { name: client, label: Klient, type: string, required: true }
+      - name: types
+        label: Typ wydarzenia
+        type: select
+        required: true
+        options:
+          multiple: true
+          values:
+            - { value: konferencje, label: Konferencje }
+            - { value: festiwale, label: Festiwale i plenery }
+            - { value: strefy-promocyjne, label: Strefy promocyjne }
+            - { value: specjalne, label: Wydarzenia specjalne }
+      - name: services
+        label: Usługi
+        type: select
+        required: true
+        options:
+          multiple: true
+          values:
+            - { value: eventy, label: Eventy }
+            - { value: scenografia, label: Scenografia }
+            - { value: technologia, label: Technologia }
+            - { value: kontent, label: Produkcja kontentu }
+      - { name: dateLabel, label: "Data (tak, jak ma się wyświetlać, np. „Lato 2023”)", type: string }
+      - { name: year, label: "Rok (liczba, do sortowania)", type: number }
+      - { name: place, label: Miejsce, type: string, required: true }
+      - name: highlight
+        label: "Wyróżnik na kafelek (maks. 40 znaków, najlepiej liczba)"
+        type: string
+        required: true
+        options: { maxlength: 40 }
+      - name: stats
+        label: "Wyniki (0–4, duże liczby na górze podstrony)"
+        type: object
+        list: { max: 4 }
+        fields:
+          - { name: value, label: "Liczba, np. 10 000", type: string, required: true }
+          - { name: label, label: "Opis, np. uczestników", type: string, required: true }
+      - { name: body, label: "Opis realizacji (1–3 akapity)", type: rich-text, required: true }
+      - { name: scope, label: Odpowiedzialność i działania, type: text }
+      - { name: strength, label: Najmocniejsza strona projektu, type: text }
+      - { name: cover, label: "Zdjęcie główne (poziome)", type: image, required: true }
+      - { name: gallery, label: "Galeria (3–12 zdjęć)", type: image, list: { max: 12 } }
+      - { name: video, label: "Link do wideo (opcjonalnie)", type: string }
+      - { name: featured, label: Pokaż na stronie głównej, type: boolean }
+      - { name: oldSlug, label: "Stary adres z poprzedniej strony (nie zmieniaj)", type: string }

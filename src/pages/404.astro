@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import Cta from "../components/Cta.astro";
+---
+<Base title="Nie ma takiej strony" description="Ta strona nie istnieje. Zobacz realizacje Gawry Warszawskiej albo umów spotkanie.">
+  <section class="wrap section stack">
+    <h1>Nie ma takiej strony</h1>
+    <p class="lead">Adres mógł się zmienić po przebudowie serwisu. Realizacje i kontakt znajdziesz poniżej.</p>
+    <div class="actions"><Cta href="/realizacje/" label="Zobacz realizacje" /><Cta variant="ghost" /></div>
+  </section>
+</Base>
+<style>h1 { font-size: clamp(48px, 9vw, 120px); } .actions { display: flex; flex-wrap: wrap; gap: 12px; }</style>
