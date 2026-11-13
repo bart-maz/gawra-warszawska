@@ -1,0 +1,6 @@
+---
+import { getCollection } from "astro:content";
+const all = await getCollection("realizacje");
+---
+<html lang="pl"><head><meta charset="utf-8" /><title>Gawra Warszawska</title></head>
+<body><p>{all.length}</p></body></html>
