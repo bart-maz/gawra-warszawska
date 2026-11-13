@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import Cta from "../components/Cta.astro";
+import { SERVICE_COPY } from "../lib/services";
+---
+<Base title="Co robimy" description="Eventy, scenografia, technologia i produkcja kontentu. Kreujemy i obsługujemy wydarzenia pod względem artystycznym, technicznym, multimedialnym, logistycznym i marketingowym.">
+  <section class="wrap section stack">
+    <h1 class="title">Co robimy</h1>
+    <p class="lead">Kreujemy i obsługujemy wydarzenia pod względem artystycznym, technicznym, multimedialnym, logistycznym i marketingowym. Nie ma dla nas briefu, który byłby zbyt mały lub zbyt duży.</p>
+    <ul class="areas">
+      {SERVICE_COPY.map((s) => (
+        <li>
+          <h2 class="area">{s.title}</h2>
+          <div class="txt">
+            <p>{s.long}</p>
+            <a class="more" href={`/realizacje/?usluga=${s.slug}`}>Zobacz realizacje →</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+  <section class="section section--ink">
+    <div class="wrap stack">
+      <h2>Co możemy dla Was zrobić?</h2>
+      <div><Cta /></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .title { font-size: clamp(56px, 9vw, 132px); }
+  .areas { display: grid; margin-top: 24px; }
+  .areas li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px 48px; border-top: 1px solid var(--line); padding-block: clamp(28px, 4vw, 48px); align-items: start; }
+  .area { font-size: clamp(40px, 6vw, 88px); }
+  .txt { display: grid; gap: 16px; color: var(--soft); font-size: 18px; }
+  .more { justify-self: start; font-weight: 700; text-decoration: none; color: var(--white); border-bottom: 2px solid var(--red); }
+  @media (max-width: 760px) { .areas li { grid-template-columns: 1fr; } }
+</style>

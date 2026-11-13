@@ -1,0 +1,12 @@
+---
+import Base from "../layouts/Base.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+---
+<Base title="Kontakt" description="Umów spotkanie z Gawrą Warszawską. Opowiedz o swoim wydarzeniu, a wrócimy z pomysłem, zakresem i terminami.">
+  <section class="wrap section stack">
+    <h1 class="title">Umów spotkanie</h1>
+    <p class="lead">Opowiedz w kilku zdaniach, co planujesz. Odezwiemy się, żeby ustalić termin rozmowy.</p>
+    <ContactBlock />
+  </section>
+</Base>
+<style>.title { font-size: clamp(52px, 9vw, 132px); }</style>

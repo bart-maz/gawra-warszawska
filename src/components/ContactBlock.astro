@@ -1,0 +1,67 @@
+---
+import { getProjects } from "../lib/collection";
+const titles = Object.fromEntries((await getProjects()).map((p) => [p.slug, p.data.title]));
+---
+<div class="contact" id="formularz">
+  <form name="spotkanie" method="POST" action="/dziekujemy/" data-netlify="true" netlify-honeypot="bot-field" data-titles={JSON.stringify(titles)}>
+    <input type="hidden" name="form-name" value="spotkanie" />
+    <input type="hidden" name="realizacja" id="c-realizacja" value="" />
+    <p class="bot"><label>Nie wypełniaj tego pola: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+    <p id="dotyczy" class="about" hidden></p>
+    <div class="row">
+      <label for="c-imie">Imię i nazwisko<input id="c-imie" name="imie" type="text" autocomplete="name" required /></label>
+      <label for="c-firma">Firma<input id="c-firma" name="firma" type="text" autocomplete="organization" /></label>
+    </div>
+    <div class="row">
+      <label for="c-email">E-mail<input id="c-email" name="email" type="email" autocomplete="email" required /></label>
+      <label for="c-telefon">Telefon<input id="c-telefon" name="telefon" type="tel" autocomplete="tel" /></label>
+    </div>
+    <label for="c-wiadomosc">Co planujesz? Termin, skala, miejsce<textarea id="c-wiadomosc" name="wiadomosc" rows="5"></textarea></label>
+    <button type="submit">Wyślij zgłoszenie</button>
+    <p class="legal">Dane z formularza wykorzystamy wyłącznie po to, żeby odpowiedzieć na Twoje zgłoszenie i umówić spotkanie.</p>
+  </form>
+  <aside class="person">
+    <p class="label">Wolisz od razu porozmawiać?</p>
+    <p class="name">Dawid Sobieraj</p>
+    <p><a href="mailto:dawid@gawra-warszawska.pl">dawid@gawra-warszawska.pl</a></p>
+    <p><a href="tel:+48604774276">604 774 276</a></p>
+    <p class="label second">Biuro</p>
+    <p><a href="mailto:biuro@gawra-warszawska.pl">biuro@gawra-warszawska.pl</a></p>
+    <p>Duchnicka 3 bud. Defabryka<br />01-796 Warszawa</p>
+  </aside>
+</div>
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[name="spotkanie"]');
+  if (form) {
+    // The project name is looked up in a map built at build time; nothing from the URL is shown directly.
+    const titles: Record<string, string> = JSON.parse(form.dataset.titles ?? "{}");
+    const slug = new URLSearchParams(location.search).get("realizacja") ?? "";
+    if (Object.hasOwn(titles, slug)) {
+      (form.elements.namedItem("realizacja") as HTMLInputElement).value = slug;
+      const note = document.getElementById("dotyczy")!;
+      note.textContent = `Zapytanie dotyczy realizacji: ${titles[slug]}`;
+      note.hidden = false;
+    }
+  }
+</script>
+<style>
+  .contact { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 88px); align-items: start; }
+  form { display: grid; gap: 18px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--soft); }
+  input, textarea { font: inherit; font-size: 17px; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--white); background: var(--black); border: 1px solid #55555c; border-radius: 0; padding: 12px 14px; width: 100%; }
+  input:focus, textarea:focus { border-color: var(--white); outline: none; box-shadow: 0 0 0 2px var(--red); }
+  textarea { resize: vertical; }
+  button { justify-self: start; font: inherit; font-weight: 700; font-size: 16px; background: var(--red); color: var(--white); border: 0; padding: 14px 26px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+  button:hover { background: var(--white); color: var(--black); }
+  .bot { position: absolute; left: -9999px; }
+  .about { font-weight: 700; border-left: 3px solid var(--red); padding-left: 12px; }
+  .legal { font-size: 13px; color: var(--grey); max-width: 60ch; }
+  .person { display: grid; gap: 4px; font-size: 18px; }
+  .person .label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 6px; }
+  .person .second { margin-top: 24px; }
+  .person .name { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: 40px; line-height: 1; margin-bottom: 6px; }
+  .person a { text-decoration: none; border-bottom: 1px solid #55555c; }
+  .person a:hover { border-bottom-color: var(--red); }
+  @media (max-width: 760px) { .contact, .row { grid-template-columns: 1fr; } }
+</style>

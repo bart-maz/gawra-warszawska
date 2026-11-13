@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Cta from "../components/Cta.astro";
+import zespol from "../assets/brand/zespol.jpg";
+
+const team = ["Dawid Sobieraj", "Aldona Michalak", "Kuba Woźniak", "Piotr Samulski", "Zuza Woś"];
+const values = [
+  { title: "Idea", text: "Wyróżnia nas wszechstronność i przekonanie, że za każdym, nawet najmniejszym eventem powinna stać wyróżniająca go idea. Przy każdym projekcie proponujemy nieszablonowe rozwiązania dopasowane do marki i jej celów." },
+  { title: "Detal i całokształt", text: "Potrafimy zapanować nad każdym tematem, niezależnie od skali działań. Dbamy o każdy szczegół przedsięwzięcia, ale zawsze mamy na uwadze pełen obraz tworzonego eventu." },
+  { title: "Mocny charakter", text: "Zawiłości organizacyjne, złośliwość rzeczy martwych (i żywych), presja czasu: to codzienność pracy w eventach. Odważnie stawiamy im czoła i konsekwentnie, krok po kroku, zbliżamy się do celu." },
+];
+---
+<Base title="O nas" description="Gawra Warszawska to zespół doświadczonych profesjonalistów branży eventowej. Działamy niemal dekadę i chcemy zostać zapamiętani." image={zespol}>
+  <section class="wrap section stack">
+    <p class="eyebrow">Trochę o nas</p>
+    <h1 class="title">Chcemy zostać zapamiętani</h1>
+    <div class="intro">
+      <p>Brzmi to dość górnolotnie, ale faktycznie niewiele jest momentów w życiu, które zostają z nami na dłużej. Dlatego jeżeli mamy szansę wykreować niezapomniane doświadczenie, daje nam to ogromną satysfakcję z pracy.</p>
+      <p>Jako agencja eventowa działamy już niemal dekadę, ale część naszego zespołu zna się nawet dłużej. Dobrze nam razem, ponieważ uzupełniamy się pod kątem kompetencji i mamy podobny gust muzyczny, więc rzadko kłócimy się o playlistę na open spejsie.</p>
+    </div>
+  </section>
+
+  <section class="section section--ink" id="zespol">
+    <div class="wrap stack">
+      <h2>Zespół</h2>
+      <Image class="photo" src={zespol} alt="Zespół Gawry Warszawskiej" widths={[640, 1200, 1800]} sizes="(max-width: 1280px) 100vw, 1280px" quality={72} />
+      <ul class="team">{team.map((n) => <li>{n}</li>)}</ul>
+    </div>
+  </section>
+
+  <section class="wrap section stack">
+    <h2>Jak pracujemy</h2>
+    <ul class="values">
+      {values.map((v) => <li><h3>{v.title}</h3><p>{v.text}</p></li>)}
+    </ul>
+    <div><Cta /></div>
+  </section>
+</Base>
+<style>
+  .title { font-size: clamp(50px, 9vw, 132px); }
+  .intro { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; font-size: 19px; color: var(--soft); margin-top: 12px; }
+  .photo { width: 100%; height: auto; }
+  .team { display: flex; flex-wrap: wrap; gap: 8px 32px; font-family: var(--f-display); font-weight: 700; text-transform: uppercase; font-size: clamp(24px, 3vw, 38px); line-height: 1.1; }
+  .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-block: 12px 20px; }
+  .values li { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--white); padding-top: 16px; }
+  .values p { color: var(--soft); }
+  @media (max-width: 760px) { .intro, .values { grid-template-columns: 1fr; } }
+</style>

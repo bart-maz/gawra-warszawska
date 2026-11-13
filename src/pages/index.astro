@@ -1,6 +1,84 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import Cta from "../components/Cta.astro";
+import ContactBlock from "../components/ContactBlock.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getProjects } from "../lib/collection";
+import { SERVICE_COPY } from "../lib/services";
+
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.featured).slice(0, 6);
+const hero = projects.find((p) => p.slug === "galaxy-campus")!.data.cover;
+const clients = ["Samsung", "Tchibo", "Betclic", "Provident", "Hyundai", "Apart", "M1", "Sodexo", "Panattoni", "Maxi Zoo", "Exclusive Networks"];
 ---
-<Base title="Gawra Warszawska" description="Agencja eventowa z Warszawy. Konferencje, strefy festiwalowe i wydarzenia marek.">
-  <div class="wrap section"><h1>Kreujemy niebanalne wrażenia</h1></div>
+<Base title="Gawra Warszawska" description="Agencja eventowa z Warszawy. Konferencje, strefy festiwalowe i wydarzenia marek, od idei po ostatni kabel.">
+  <section class="hero">
+    <Image class="bg" src={hero} alt="" widths={[640, 1200, 1800]} sizes="100vw" quality={70} loading="eager" />
+    <div class="wrap inner">
+      <h1>Kreujemy <em>niebanalne</em> wrażenia</h1>
+      <p class="lead">Agencja eventowa z Warszawy. Konferencje, strefy festiwalowe i wydarzenia marek, od idei po ostatni kabel.</p>
+      <div class="actions"><Cta /><Cta href="/realizacje/" label="Zobacz realizacje" variant="ghost" /></div>
+    </div>
+  </section>
+
+  <section class="wrap section stack" id="wyroznione">
+    <div class="headrow"><h2>Wybrane realizacje</h2><a class="all" href="/realizacje/">Wszystkie realizacje →</a></div>
+    <ul class="grid">{featured.map((p, i) => <ProjectCard project={p} eager={i < 2} />)}</ul>
+  </section>
+
+  <section class="section section--ink" id="co-robimy">
+    <div class="wrap stack">
+      <h2>Co robimy</h2>
+      <p class="lead">Za każdym eventem powinna stać idea, która definiuje jego charakter, scenografię, atrakcje, technologię i komunikację. Wokół niej budujemy całą resztę.</p>
+      <ul class="services">
+        {SERVICE_COPY.map((s) => (
+          <li>
+            <h3>{s.title}</h3>
+            <p>{s.short}</p>
+            <a href={`/realizacje/?usluga=${s.slug}`}>Zobacz realizacje →</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section stack" id="klienci">
+    <p class="eyebrow">Zaufali nam</p>
+    <ul class="clients">{clients.map((c) => <li>{c}</li>)}</ul>
+    <p class="lead">Nie ma dla nas briefu, który byłby zbyt mały lub zbyt duży.</p>
+  </section>
+
+  <section class="section section--ink">
+    <div class="wrap stack">
+      <h2>Co możemy dla Was zrobić?</h2>
+      <ContactBlock />
+    </div>
+  </section>
 </Base>
+<style>
+  .hero { position: relative; isolation: isolate; margin-top: -84px; padding-top: 84px; }
+  .bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+  .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(11, 11, 12, 0.6), rgba(11, 11, 12, 0.2) 40%, rgba(11, 11, 12, 0.97)); }
+  .inner { display: grid; gap: 24px; padding-block: clamp(72px, 13vw, 200px) clamp(40px, 5vw, 72px); }
+  h1 em { font-style: normal; color: var(--red); }
+  .hero .lead { color: #e6e3de; max-width: 46ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .headrow { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+  .all { font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--red); padding-bottom: 2px; }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+  .grid :global(.card) { grid-column: span 5; }
+  .grid :global(.card:nth-child(4n + 1)), .grid :global(.card:nth-child(4n)) { grid-column: span 7; }
+  .services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 12px; }
+  .services li { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--white); padding-top: 16px; }
+  .services p { color: var(--soft); }
+  .services a { font-weight: 700; font-size: 15px; text-decoration: none; color: var(--white); justify-self: start; border-bottom: 1px solid var(--red); }
+  .clients { display: flex; flex-wrap: wrap; gap: 6px 28px; font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(32px, 5.4vw, 76px); line-height: 1; }
+  .clients li:nth-child(even) { color: var(--grey); }
+  @media (max-width: 900px) { .services { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 760px) {
+    .hero { margin-top: -130px; padding-top: 130px; }
+    .grid :global(.card), .grid :global(.card:nth-child(n)) { grid-column: span 12; }
+    .services { grid-template-columns: 1fr; }
+  }
+</style>
