@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import type { Project } from "../lib/collection";
+import { TYPES } from "../lib/taxonomy";
+
+interface Props { project: Project; eager?: boolean; }
+const { project, eager = false } = Astro.props;
+const d = project.data;
+const meta = [TYPES[d.types[0]], d.dateLabel].filter(Boolean).join(" · ");
+---
+<li class="card" data-types={d.types.join(" ")} data-services={d.services.join(" ")} data-client={project.clientSlug}>
+  <a href={`/realizacje/${project.slug}/`}>
+    <Image class="pic" src={d.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 58vw" quality={70} loading={eager ? "eager" : "lazy"} />
+    <span class="fact">{d.highlight}</span>
+    <span class="txt">
+      <span class="client">{d.client}</span>
+      <h3>{d.title}</h3>
+      <span class="meta">{meta}</span>
+    </span>
+  </a>
+</li>
+<style>
+  .card { position: relative; height: clamp(250px, 30vw, 420px); overflow: hidden; background: var(--ink); }
+  a { display: block; height: 100%; text-decoration: none; }
+  .pic { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  a::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(11, 11, 12, 0.92)); }
+  a:hover .pic, a:focus-visible .pic { transform: scale(1.04); }
+  .txt { position: absolute; inset: auto 0 0 0; z-index: 1; padding: 20px; display: grid; gap: 4px; }
+  .client { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+  .meta { font-size: 14px; color: var(--soft); }
+  .fact { position: absolute; z-index: 1; top: 14px; left: 14px; background: var(--white); color: var(--black); font-weight: 700; font-size: 13px; line-height: 1.3; padding: 5px 10px; max-width: calc(100% - 28px); }
+</style>

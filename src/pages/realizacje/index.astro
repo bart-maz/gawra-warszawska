@@ -1,0 +1,47 @@
+---
+import Base from "../../layouts/Base.astro";
+import FilterBar from "../../components/FilterBar.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Cta from "../../components/Cta.astro";
+import { getProjects } from "../../lib/collection";
+
+const projects = await getProjects();
+---
+<Base title="Realizacje" description="Konferencje, strefy festiwalowe, strefy promocyjne i wydarzenia specjalne zrealizowane przez Gawrę Warszawską dla marek takich jak Samsung, Tchibo, Betclic i Provident.">
+  <section class="wrap section stack">
+    <h1 class="title">Realizacje</h1>
+    <p class="lead">Wybierz typ wydarzenia, klienta albo usługę. Adres strony zapamiętuje filtr, więc gotową listę możesz komuś wysłać.</p>
+    <FilterBar projects={projects} />
+    <p id="count" class="count" aria-live="polite">{projects.length} z {projects.length} realizacji</p>
+    <ul id="grid" class="grid">
+      {projects.map((p, i) => <ProjectCard project={p} eager={i < 2} />)}
+    </ul>
+    <div id="empty" class="empty" hidden>
+      <p>Brak realizacji dla tych filtrów.</p>
+      <button type="button" id="clear">Pokaż wszystkie</button>
+    </div>
+  </section>
+  <section class="section section--ink">
+    <div class="wrap stack">
+      <h2>Planujesz podobne wydarzenie?</h2>
+      <p class="lead">Opowiedz nam o nim. Wrócimy z pomysłem, zakresem i terminami.</p>
+      <div><Cta /></div>
+    </div>
+  </section>
+</Base>
+<script>
+  import "../../scripts/filter.ts";
+</script>
+<style>
+  .title { font-size: clamp(56px, 9vw, 132px); }
+  .count { color: var(--grey); font-size: 15px; }
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+  .grid :global(.card) { grid-column: span 5; }
+  .grid:not(.is-filtered) :global(.card:nth-child(4n + 1)), .grid:not(.is-filtered) :global(.card:nth-child(4n)) { grid-column: span 7; }
+  .grid.is-filtered :global(.card) { grid-column: span 6; }
+  .empty { display: grid; gap: 16px; justify-items: start; padding-block: 32px; font-size: 20px; }
+  .empty button { font: inherit; font-size: 16px; font-weight: 700; background: var(--white); color: var(--black); border: 0; padding: 12px 20px; cursor: pointer; }
+  @media (max-width: 760px) {
+    .grid :global(.card), .grid:not(.is-filtered) :global(.card:nth-child(n)), .grid.is-filtered :global(.card) { grid-column: span 12; }
+  }
+</style>
