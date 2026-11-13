@@ -21,7 +21,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .wrap { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
 .section { padding-block: var(--section); }
 .section--ink { background: var(--ink); }
-.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red-text); }
 .lead { font-size: clamp(18px, 1.6vw, 21px); color: var(--soft); max-width: 60ch; }
 .prose { display: grid; gap: 1em; max-width: 68ch; color: var(--soft); }
 .stack { display: grid; gap: 24px; }

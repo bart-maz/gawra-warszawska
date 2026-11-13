@@ -7,6 +7,8 @@
   --soft: #cfccc7;
   --grey: #8d8a86;
   --red: #e0092f;
+  /* Lighter red for small text on black: brand red alone is below 4.5:1 contrast. */
+  --red-text: #ff4d61;
   --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
   --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --gutter: clamp(20px, 4vw, 48px);

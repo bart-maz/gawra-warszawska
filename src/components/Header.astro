@@ -17,11 +17,16 @@ const path = Astro.url.pathname;
       <span>Gawra<br />Warszawska</span>
     </a>
     <nav aria-label="Główna">
-      <details class="menu" open>
+      <ul class="desk">
+        {links.map((l) => (
+          <li><a class="navlink" href={l.href} aria-current={path.startsWith(l.href) ? "page" : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
+      <details class="mob">
         <summary>Menu</summary>
         <ul>
           {links.map((l) => (
-            <li><a class="navlink" href={l.href} aria-current={path.startsWith(l.href) ? "page" : undefined}>{l.label}</a></li>
+            <li><a class="moblink" href={l.href} aria-current={path.startsWith(l.href) ? "page" : undefined}>{l.label}</a></li>
           ))}
         </ul>
       </details>
@@ -29,32 +34,27 @@ const path = Astro.url.pathname;
     <Cta />
   </div>
 </header>
-<script>
-  // The menu ships open so it works without JavaScript; on phones we collapse it.
-  const menu = document.querySelector<HTMLDetailsElement>("details.menu");
-  const wide = window.matchMedia("(min-width: 761px)");
-  const sync = () => { if (menu) menu.open = wide.matches; };
-  sync();
-  wide.addEventListener("change", sync);
-</script>
 <style>
   .site-header { position: relative; z-index: 5; }
   .bar { display: flex; align-items: center; gap: 24px; padding-block: 18px; }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1; }
   nav { margin-left: auto; }
-  summary { display: none; }
-  .menu ul { display: flex; gap: 28px; }
+  .desk { display: flex; gap: 28px; }
+  .mob { display: none; }
   .navlink { text-decoration: none; font-weight: 500; font-size: 16px; padding-block: 6px; border-bottom: 2px solid transparent; }
   .navlink:hover, .navlink[aria-current="page"] { border-bottom-color: var(--red); }
   @media (max-width: 760px) {
     .bar { flex-wrap: wrap; gap: 12px; }
     nav { order: 3; width: 100%; margin: 0; }
     .bar :global(.cta) { margin-left: auto; padding: 10px 16px; font-size: 15px; }
+    .desk { display: none; }
+    .mob { display: block; }
     summary { display: inline-block; cursor: pointer; font-weight: 700; padding: 8px 0; list-style: none; text-transform: uppercase; letter-spacing: 0.1em; font-size: 13px; }
     summary::-webkit-details-marker { display: none; }
-    summary::after { content: " +"; color: var(--red); }
+    summary::after { content: " +"; color: var(--red-text); }
     details[open] summary::after { content: " −"; }
-    .menu ul { flex-direction: column; gap: 4px; padding-bottom: 8px; }
-    .navlink { display: block; font-size: 20px; padding-block: 8px; }
+    .mob ul { display: grid; gap: 4px; padding-bottom: 8px; }
+    .moblink { display: block; text-decoration: none; font-weight: 500; font-size: 20px; padding-block: 8px; }
+    .moblink[aria-current="page"] { color: var(--red-text); }
   }
 </style>
