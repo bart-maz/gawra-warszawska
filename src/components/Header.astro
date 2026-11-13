@@ -17,7 +17,7 @@ const path = Astro.url.pathname;
       <span>Gawra<br />Warszawska</span>
     </a>
     <nav aria-label="Główna">
-      <details class="menu">
+      <details class="menu" open>
         <summary>Menu</summary>
         <ul>
           {links.map((l) => (
@@ -30,7 +30,7 @@ const path = Astro.url.pathname;
   </div>
 </header>
 <script>
-  // On wide screens the menu is always open; on phones it starts closed.
+  // The menu ships open so it works without JavaScript; on phones we collapse it.
   const menu = document.querySelector<HTMLDetailsElement>("details.menu");
   const wide = window.matchMedia("(min-width: 761px)");
   const sync = () => { if (menu) menu.open = wide.matches; };
@@ -58,4 +58,3 @@ const path = Astro.url.pathname;
     .navlink { display: block; font-size: 20px; padding-block: 8px; }
   }
 </style>
-<noscript><style>details.menu > ul { display: flex !important; } </style></noscript>

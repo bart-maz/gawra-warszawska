@@ -20,3 +20,11 @@ test("rama strony mieści się na telefonie", async ({ page }) => {
   expect(overflow).toBeLessThanOrEqual(0);
   await expect(page.locator("header a.cta")).toBeVisible();
 });
+
+test.describe("bez JavaScriptu", () => {
+  test.use({ javaScriptEnabled: false });
+  test("nawigacja jest widoczna", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("header nav a.navlink").first()).toBeVisible();
+  });
+});
