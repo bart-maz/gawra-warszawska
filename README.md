@@ -27,6 +27,16 @@ Filtr zapisuje się w adresie, więc odbiorca od razu widzi właściwe realizacj
 
 Najprościej: ustaw filtry na stronie i skopiuj adres z paska przeglądarki.
 
+## Portfolio PDF do wysyłki mailowej
+
+Plik `portfolio/Gawra-Warszawska-portfolio.pdf` powstaje z tych samych realizacji co strona. Po zmianie treści wygeneruj go ponownie:
+
+```bash
+npm run portfolio
+```
+
+Wybór i kolejność realizacji ustawia lista `SELECTION` na górze `scripts/build-portfolio.mjs`. Realizacja w portfolio musi mieć zakres działań, najmocniejszą stronę i co najmniej 3 zdjęcia w galerii. Skrypt sam dopasowuje wielkość tekstu i przerywa, jeśli coś się nie mieści na stronie albo plik przekracza 10 MB.
+
 ## Formularz „Umów spotkanie”
 
 Zgłoszenia obsługuje Netlify Forms (formularz `spotkanie`). Powiadomienia e-mail ustawia się w panelu Netlify: Forms → Form notifications.
